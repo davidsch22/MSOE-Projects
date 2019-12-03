@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schulzd.Lab9Controller">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="350.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox prefWidth="100.0" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#open" prefWidth="100.0" text="Open" />
+            <Button fx:id="save" disable="true" mnemonicParsing="false" onAction="#save" prefWidth="100.0" text="Save" />
+            <Button fx:id="reload" disable="true" mnemonicParsing="false" onAction="#reload" prefWidth="100.0" text="Reload" />
+            <Button fx:id="grayscale" disable="true" mnemonicParsing="false" onAction="#grayscale" prefWidth="100.0" text="Grayscale" />
+            <Button fx:id="negative" disable="true" mnemonicParsing="false" onAction="#negative" prefWidth="100.0" text="Negative" />
+            <Button fx:id="red" disable="true" mnemonicParsing="false" onAction="#red" prefWidth="100.0" text="Red" />
+            <Button fx:id="redGray" disable="true" mnemonicParsing="false" onAction="#redGray" prefWidth="100.0" text="Red-Gray" />
+            <Button fx:id="filter" disable="true" mnemonicParsing="false" onAction="#toggleFilter" prefWidth="100.0" text="Show Filter" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

@@ -1,0 +1,13 @@
+Demonstration Picture
+800 600
+#F0F0F0
+P: 40 40 #000000
+C: 40 40 #FF0000 30
+T: 60 60 #00FF00 100 50
+R: 160 160 #0000FF 50 150
+LT: 360 360 #00FF00 100 50 Tri
+LR: 460 460 #0000FF 150 100 Reck Tangle Angle Rangle
+LT: 0 0 #000000 50 -100 Negative Dimension
+LT: 0 0 #s6h34k 50 100 Bad Hex Color
+X: 0 0 #000000 50 100 Shape Type Unrecognized
+LR: 0 #000000 50 Invalid Line Format

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schulzd.Lab8Controller">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="350.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox prefWidth="100.0" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#open" prefWidth="100.0" text="Open" />
+            <Button mnemonicParsing="false" onAction="#save" prefWidth="100.0" text="Save" />
+            <Button mnemonicParsing="false" onAction="#reload" prefWidth="100.0" text="Reload" />
+            <Button mnemonicParsing="false" onAction="#grayscale" prefWidth="100.0" text="Grayscale" />
+            <Button mnemonicParsing="false" onAction="#negative" prefWidth="100.0" text="Negative" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
