@@ -1,0 +1,5 @@
+A space should be placed between each encoded character.
+
+A **'' ''** should be placed between each word.
+
+Line breaks in the input file should be replicated in the encoded file.

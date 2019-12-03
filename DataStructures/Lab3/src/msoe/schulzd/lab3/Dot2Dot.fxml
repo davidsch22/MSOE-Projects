@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="msoe.schulzd.lab3.Dot2DotController">
+    <children>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#open" text="Open" />
+                        <MenuItem fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#save" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Draw">
+                    <items>
+                        <MenuItem fx:id="linesButton" disable="true" mnemonicParsing="false" onAction="#drawLines" text="Lines Only" />
+                        <MenuItem fx:id="dotsButton" disable="true" mnemonicParsing="false" onAction="#drawDots" text="Dots Only" />
+                        <MenuItem fx:id="removeButton" disable="true" mnemonicParsing="false" onAction="#removeDots" text="Remove Dots" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <Canvas fx:id="canvas" height="375.0" width="400.0" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="Dots: " />
+            <Label fx:id="dotCount" text="0" />
+         </children>
+      </HBox>
+    </children>
+</VBox>
