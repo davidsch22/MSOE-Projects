@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schulzd.Controller">
+   <top>
+      <ToolBar prefHeight="40.0" BorderPane.alignment="CENTER">
+        <items>
+            <ToggleButton fx:id="alexLike" text="AlexNet-Like" onAction="#showNetwork">
+               <toggleGroup>
+                  <ToggleGroup fx:id="network" />
+               </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="inceptionLike" text="Inception-Like"
+                          toggleGroup="$network" onAction="#showNetwork">
+            </ToggleButton>
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <Canvas fx:id="canvas" width="850" height="650" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
