@@ -1,14 +1,17 @@
+/*
+ * Course:     SE 2811
+ * Term:       Winter 2019-20
+ * Assignment: Lab 4: Decorators
+ * Author:     Dr. Yoder and David Schulz
+ * Date:       1/16/2020
+ */
 package schulzd;
 
 import javafx.scene.canvas.Canvas;
 
-/**
- * TODO: PLEASE PLEASE just safe-delete this placeholder class and completely replace it with the
- * corresponding part of your own design
- *
- * You MAY wish to refactor this placeholder just before deleting it
- * to give it the name in your design.
- */
-public class Network {
-    public void draw(Canvas canvas){}
+public interface Network {
+    void draw(Canvas canvas);
+    int inputSize();
+    int outputSize();
+    int numLayers();
 }

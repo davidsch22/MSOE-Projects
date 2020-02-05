@@ -16,10 +16,13 @@
             <ToggleButton fx:id="inceptionLike" text="Inception-Like"
                           toggleGroup="$network" onAction="#showNetwork">
             </ToggleButton>
+            <ToggleButton fx:id="custom" text="Custom Network"
+                          toggleGroup="$network" onAction="#showNetwork">
+            </ToggleButton>
         </items>
       </ToolBar>
    </top>
    <center>
-      <Canvas fx:id="canvas" width="850" height="650" BorderPane.alignment="CENTER" />
+      <Canvas fx:id="canvas" width="900" height="700" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
