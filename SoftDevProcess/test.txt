@@ -1,0 +1,88 @@
+Graduation Plan
+Current Year Standing: Sophomore
+Current Term: Spring
+Next Year Standing: Junior
+Next Term: Fall
+Estimated Graduation Date: May 2022
+
+Currently Enrolled Courses:
+
+Spring - CS2040 - Programming in C and C++
+Spring - SE2800 - Software Engineering Process I
+Spring - SE2832 - Introduction to Software Verification
+Spring - MA262 - Probability and Statistics
+Spring - BA3444 - Organizational Behavior and Leadership
+
+
+Completed Courses:
+
+Freshman
+------------------------
+Fall - CS1011 - Software Development I
+Fall - CH200 - Chemistry I
+Fall - MA136 - Calculus I
+Fall - GS1001 - Freshman Studies I
+Winter - CS1021 - Software Development II
+Winter - PH2011 - Physics I - Mechanics
+Winter - MA137 - Calculus II
+Winter - GS1002 - Freshman Studies II
+Spring - CS2852 - Data Structures
+Spring - PH2021 - Physics II - ElectroMagnetism
+Spring - MA2314 - Calculus III
+Spring - GS1003 - Freshman Studies III
+
+Sophomore
+------------------------
+Fall - SE2030 - Software Engineering Tools and Practices
+Fall - CS2911 - Network Protocols
+Fall - MA2310 - Discrete Mathematics I
+Winter - SE2811 - Software Component Design
+Winter - SE2840 - Web Application Development
+Winter - CS2711 - Computer Organization
+
+Junior
+------------------------
+
+Senior
+------------------------
+
+
+Incomplete Courses Needed for Graduation:
+
+Freshman
+------------------------
+
+Sophomore
+------------------------
+Spring - CS2040 - Programming in C and C++
+Spring - SE2800 - Software Engineering Process I
+Spring - SE2832 - Introduction to Software Verification
+Spring - MA262 - Probability and Statistics
+Spring - BA3444 - Organizational Behavior and Leadership
+
+Junior
+------------------------
+Fall - SE3010 - Software Development Laboratory I
+Fall - SE3800 - Software Engineering Process II
+Fall - SE3821 - Software Requirements and Specification
+Fall - CS3860 - Database Systems
+Fall - OR402 - Professional Guidance
+Winter - SE3020 - Software Development Laboratory II
+Winter - SE3810 - Software Architecture
+Winter - CS3840 - Operating Systems
+Winter - MA3320 - Discrete Mathematics II
+Spring - SE3030 - Software Development Laboratory III
+Spring - CS3851 - Algorithms
+Spring - MA383 - Linear Algebra
+Spring - HU432 - Ethics for Professional Managers and Engineers
+
+Senior
+------------------------
+Fall - SE4000 - Senior Design Project I
+Fall - SE3910 - Real-Time Systems
+Winter - SE4010 - Senior Design Project II
+Winter - IE423 - Engineering Economy
+Spring - SE4020 - Senior Design Project III
+
+
+NOTE: This does not include electives, please consult your faculty advisor.

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Name: Anthony Lohmiller, Kam Mitchell, David Schulz, Jesse Sierra
+ Date: 14 April 2020
+ Quarter: Spring 2019-2020
+ Class: SE Process
+ Lab: 4
+ Created: 30 March 2020
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="msoe.CourseDetailsController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="50.0">
+         <children>
+            <Label text="Course Name">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="name" editable="false" prefWidth="200.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0">
+         <children>
+            <Label text="Course Code">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="code" editable="false" prefWidth="75.0" />
+            <Label text="Credits">
+               <HBox.margin>
+                  <Insets left="40.0" right="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="credits" editable="false" prefWidth="30.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label text="Prerequisites">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#showGraph" text="Graph" />
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </VBox>
+            <ListView fx:id="prereqs" prefHeight="100.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0">
+         <children>
+            <Label text="Completed">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Label>
+            <CheckBox fx:id="completed" disable="true" ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

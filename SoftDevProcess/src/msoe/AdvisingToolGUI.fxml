@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ Name: Anthony Lohmiller, Kam Mitchell, David Schulz, Jesse Sierra
+ Date: 14 April 2020
+ Quarter: Spring 2019-2020
+ Class: SE Process
+ Lab: 4
+ Created: 30 March 2020
+-->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="msoe.AdvisingToolController">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Pane prefHeight="800" prefWidth="800">
+         <children>
+            <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="800.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem fx:id="importMenuItem" mnemonicParsing="false" onAction="#onImport" text="Import Transcript" />
+                        <MenuItem mnemonicParsing="false" onAction="#onGenerateGraduationPlanSelect" text="Generate Graduation Plan" />
+                    <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#onExit" text="Exit" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Major">
+                    <items>
+                        <RadioMenuItem fx:id="softwareEngineering" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Software Engineering">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="majorToggle" />
+                           </toggleGroup></RadioMenuItem>
+                        <RadioMenuItem fx:id="computerScience" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Computer Science" toggleGroup="$majorToggle" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Year">
+                     <items>
+                        <RadioMenuItem fx:id="freshman" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Freshman">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="yearToggle" />
+                           </toggleGroup></RadioMenuItem>
+                        <RadioMenuItem fx:id="sophomore" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Sophomore" toggleGroup="$yearToggle" />
+                        <RadioMenuItem fx:id="junior" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Junior" toggleGroup="$yearToggle" />
+                        <RadioMenuItem fx:id="senior" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Senior" toggleGroup="$yearToggle" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Term">
+                    <items>
+                        <RadioMenuItem fx:id="fall" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Fall">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="termToggle" />
+                           </toggleGroup></RadioMenuItem>
+                        <RadioMenuItem fx:id="winter" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Winter" toggleGroup="$termToggle" />
+                        <RadioMenuItem fx:id="spring" mnemonicParsing="false" onAction="#displayTermSearchButton" text="Spring" toggleGroup="$termToggle" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Mode">
+                     <items>
+                        <RadioMenuItem fx:id="studentMenuItem" mnemonicParsing="false" onAction="#onModeSelect" selected="true" text="Student">
+                                <toggleGroup>
+                                        <ToggleGroup fx:id="modeToggle" />
+                                </toggleGroup></RadioMenuItem>
+                        <RadioMenuItem fx:id="facultyMenuItem" mnemonicParsing="false" onAction="#onModeSelect" text="Faculty" toggleGroup="$modeToggle" />
+                     </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+            <TextField fx:id="courseSearch" layoutX="14.0" layoutY="95.0" onAction="#searchByCourse" prefHeight="25.0" prefWidth="316.0" />
+            <Label layoutX="14.0" layoutY="78.0" prefHeight="17.0" prefWidth="169.0" text="Course Code:" />
+            <ListView fx:id="courseList" layoutY="126.0" prefHeight="675.0" prefWidth="800.0" />
+            <Button fx:id="recommendButton" layoutX="14.0" layoutY="43.0" mnemonicParsing="false" onAction="#onRecommendations" text="Show Recommendations" />
+            <Button fx:id="termSearchButton" layoutX="171.0" layoutY="43.0" mnemonicParsing="false" onAction="#searchByTerm" text="Search By Term" />
+            <Button fx:id="courseSearchButton" layoutX="340.0" layoutY="95.0" mnemonicParsing="false" onAction="#searchByCourse" text="Search By Course Code" />
+            <Label layoutX="698.0" layoutY="47.0" text="Mode: " />
+            <Label fx:id="modeLabel" layoutX="735.0" layoutY="47.0" text="Student" />
+            <Button layoutX="280.0" layoutY="43.0" mnemonicParsing="false" onAction="#clearDisplay" text="Clear Display" />
+            <Button fx:id="completedGraphButton" layoutX="374.0" layoutY="43.0" mnemonicParsing="false" onAction="#showCompletedGraph" text="Completed Graph" />
+         </children></Pane>
+   </children>
+</GridPane>
