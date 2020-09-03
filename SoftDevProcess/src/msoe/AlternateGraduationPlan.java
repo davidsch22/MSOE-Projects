@@ -35,7 +35,7 @@ public class AlternateGraduationPlan {
 
         File file = new File("./UnofficialTranscript.pdf");
         Transcript transcript = new Transcript(file);
-        CourseCompleter courseCompleter = new CourseCompleter(transcript.getPdf(), new CourseTracksDataStructure());
+        CourseCompleter courseCompleter = new CourseCompleter(transcript.getPdf());
         courseCompleter.run();
         List<String> make = courseCompleter.getNotPassed();
         for (int i = 0; i < make.size(); i++) {

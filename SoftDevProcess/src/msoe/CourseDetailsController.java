@@ -36,20 +36,19 @@ public class CourseDetailsController {
     @FXML
     private CheckBox completed;
 
-    private CourseTracksDataStructure ctds;
-    private Course course;
+    private BasicCourseInfo course;
 
     /**
      * Allows the user to edit information about the course.
      * Intentionally left editable for the moment, will be changed later.
      * @param course The course to edit, as selected from the ListView.
      */
-    public void setCourse(Course course) {
+    public void setCourse(BasicCourseInfo course) {
         this.course = course;
         name.setText(course.getCourseName());
         code.setText(course.getCourseCode());
         credits.setText(String.valueOf(course.getCredits()));
-        for (Course prereq : course.getPrerequisites()) {
+        for (BasicCourseInfo prereq : course.getPrerequisites()) {
             prereqs.getItems().add(prereq.getCourseCode());
         }
         completed.setSelected(course.isCompleted());
@@ -67,14 +66,10 @@ public class CourseDetailsController {
             graphStage.show();
 
             CourseGraphController graphController = loader.getController();
-            graphController.showPrereqs(course, ctds);
+            graphController.showPrereqs(course);
         } catch (IOException e) {
             // Do nothing, it'll never happen
             // Required for reading CourseGraph.fxml
         }
-    }
-
-    public void setCtds(CourseTracksDataStructure ctds) {
-        this.ctds = ctds;
     }
 }

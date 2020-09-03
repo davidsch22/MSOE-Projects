@@ -4,29 +4,28 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Optional;
 
 public class CourseGraphController {
     @FXML
     private Canvas canvas;
 
-    public void showCompleted(CourseTracksDataStructure ctds) {
-        LinkedHashMap<String, Course> SETrack = ctds.getSETrackCSV();
-        HashMap<String, Course> completedCourses = new HashMap<>();
+    public void showCompleted() {
+        HashMap<String, BasicCourseInfo> allCourses = CourseLists.courses;
+        HashMap<String, BasicCourseInfo> completedCourses = new HashMap<>();
 
-        for (Course course : SETrack.values()) {
+        for (BasicCourseInfo course : allCourses.values()) {
             if (course.isCompleted()) {
                 completedCourses.put(course.getCourseCode(), course);
 
                 for (int i = 0; i < course.getPrerequisites().size(); i++) {
-                    Course prereq = course.getPrerequisites().get(i);
-                    Course existPrereq = completedCourses.getOrDefault(prereq.getCourseCode(), null);
+                    BasicCourseInfo prereq = course.getPrerequisites().get(i);
+                    BasicCourseInfo existPrereq = completedCourses.getOrDefault(prereq.getCourseCode(), null);
                     if (existPrereq != null) {
                         course.getPrerequisites().set(i, existPrereq);
                         completedCourses.remove(prereq.getCourseCode());
                     } else {
-                        course.getPrerequisites().set(i, SETrack.getOrDefault(prereq.getCourseCode(), prereq));
+                        course.getPrerequisites().set(i, allCourses.getOrDefault(prereq.getCourseCode(), prereq));
                     }
                 }
             }
@@ -35,11 +34,11 @@ public class CourseGraphController {
         renderCompleted(completedCourses);
     }
 
-    public void renderCompleted(HashMap<String, Course> completedCourses) {
+    public void renderCompleted(HashMap<String, BasicCourseInfo> completedCourses) {
         int colNum = 1;
         ArrayList<CourseCoords> colPrereqs = new ArrayList<>();
 
-        for (Course course : completedCourses.values()) {
+        for (BasicCourseInfo course : completedCourses.values()) {
             colPrereqs.add(new CourseCoords(course));
         }
 
@@ -48,7 +47,7 @@ public class CourseGraphController {
 
             ArrayList<CourseCoords> nextPrereqs = new ArrayList<>();
             for (CourseCoords prereq : colPrereqs) {
-                for (Course next : prereq.course.getPrerequisites()) {
+                for (BasicCourseInfo next : prereq.course.getPrerequisites()) {
                     Optional<CourseCoords> already = nextPrereqs.stream().filter(thisCourse ->
                             thisCourse.course.getCourseCode().equals(next.getCourseCode())).findFirst();
                     if (already.isPresent()) {
@@ -64,7 +63,7 @@ public class CourseGraphController {
         }
     }
 
-    public void showPrereqs(Course course, CourseTracksDataStructure ctds) {
+    public void showPrereqs(BasicCourseInfo course) {
         int colNum = 1;
         ArrayList<CourseCoords> colPrereqs = new ArrayList<>();
         colPrereqs.add(new CourseCoords(course));
@@ -73,14 +72,14 @@ public class CourseGraphController {
 
             ArrayList<CourseCoords> nextPrereqs = new ArrayList<>();
             for (CourseCoords prereq : colPrereqs) {
-                for (Course next : prereq.course.getPrerequisites()) {
+                for (BasicCourseInfo next : prereq.course.getPrerequisites()) {
                     Optional<CourseCoords> already = nextPrereqs.stream().filter(thisCourse ->
                             thisCourse.course.getCourseCode().equals(next.getCourseCode())).findFirst();
                     if (already.isPresent()) {
                         already.get().addCoords(prereq.theseCoords);
                     } else {
-                        Course realNext = ctds.getCSTrackCSV().getOrDefault(next.getCourseCode(), null);
-                        if (realNext == null) realNext = ctds.getSETrackCSV().getOrDefault(next.getCourseCode(), null);
+                        BasicCourseInfo realNext = CourseLists.courses.getOrDefault(next.getCourseCode(), null);
+                        if (realNext == null) realNext = CourseLists.courses.getOrDefault(next.getCourseCode(), null);
                         if (realNext == null) realNext = next;
                         CourseCoords newPrereq = new CourseCoords(realNext, prereq.theseCoords);
                         nextPrereqs.add(newPrereq);
@@ -114,15 +113,15 @@ public class CourseGraphController {
     }
 
     private static class CourseCoords {
-        Course course;
+        BasicCourseInfo course;
         int[] theseCoords;
         int[][] nextCoords;
 
-        public CourseCoords(Course course) {
+        public CourseCoords(BasicCourseInfo course) {
             this(course, new int[]{0, 0});
         }
 
-        public CourseCoords(Course course, int[] nextCoords) {
+        public CourseCoords(BasicCourseInfo course, int[] nextCoords) {
             this.course = course;
             theseCoords = new int[2];
             this.nextCoords = new int[1][2];

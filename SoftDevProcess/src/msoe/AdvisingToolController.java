@@ -33,6 +33,7 @@ import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.time.Year;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class AdvisingToolController {
 
@@ -69,12 +70,10 @@ public class AdvisingToolController {
     @FXML
     private ListView<String> courseList;
 
-    private CourseTracksDataStructure ctds = null;
-    private HashMap<String, Course> loadedCourses = new HashMap<>();
-    private HashMap<String, Course> SETrack;
-    private HashMap<String, Course> CSTrack;
+    private final HashMap<String, BasicCourseInfo> allCourses = CourseLists.courses;
+    private final HashMap<String, TrackCourseInfo> SETrack = CourseLists.SETrack;
+    private final HashMap<String, TrackCourseInfo> CSTrack = CourseLists.CSTrack;
     private List<String> pdf;
-    private CourseTracksDataStructure updatedTrack;
     private enum modes { student, faculty }
     private modes mode = modes.student;
     private boolean majorSelected = false;
@@ -85,26 +84,20 @@ public class AdvisingToolController {
      * Initialize method used for the course details popup when ListView item is clicked.
      */
     public void initialize() {
-        ctds = new CourseTracksDataStructure();
-        CourseInformation cs = new CourseInformation(ctds);
         File curriculum = new File("curriculum.csv");
         File prereqs = new File("prerequisites.csv");
         File offerings = new File("offerings.csv");
         try {
-            cs.completedParse(curriculum, prereqs , offerings);
+            CourseInformation.completedParse(curriculum, prereqs , offerings);
         } catch (CsvValidationException | IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
 
-        SETrack = ctds.getSETrackCSV();
-        CSTrack = ctds.getCSTrackCSV();
-
         courseList.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     try {
-                        Course course = SETrack.getOrDefault(newValue, null);
-                        if (course == null) course = CSTrack.getOrDefault(newValue, null);
+                        BasicCourseInfo course = allCourses.getOrDefault(newValue, null);
                         if (course == null) return;
 
                         Stage detailsStage = new Stage();
@@ -115,7 +108,6 @@ public class AdvisingToolController {
                         detailsStage.show();
 
                         CourseDetailsController detailsController = loader.getController();
-                        detailsController.setCtds(ctds);
                         detailsController.setCourse(course);
                     } catch (IOException e) {
                         // Do nothing, it'll never happen
@@ -144,17 +136,17 @@ public class AdvisingToolController {
 
             //Ensures only SE courses display when it is selected in the menu, same with CS.
             if (majorSearch.equalsIgnoreCase("Software Engineering")) {
-                for (Map.Entry<String, Course> stringCourseEntry : SETrack.entrySet()) {
-                    Course courseData = stringCourseEntry.getValue();
+                for (Entry<String, TrackCourseInfo> stringCourseEntry : SETrack.entrySet()) {
+                    TrackCourseInfo courseData = stringCourseEntry.getValue();
                     if (courseData.getYear().equalsIgnoreCase(yearSearch) && courseData.getTerm().equalsIgnoreCase(termSearch)) {
-                        courseList.getItems().add(courseData.getCourseCode());
+                        courseList.getItems().add(stringCourseEntry.getKey());
                     }
                 }
             } else if (majorSearch.equalsIgnoreCase("Computer Science")) {
-                for (Map.Entry<String, Course> stringCourseEntry : CSTrack.entrySet()) {
-                    Course courseData = stringCourseEntry.getValue();
+                for (Entry<String, TrackCourseInfo> stringCourseEntry : CSTrack.entrySet()) {
+                    TrackCourseInfo courseData = stringCourseEntry.getValue();
                     if (courseData.getYear().equalsIgnoreCase(yearSearch) && courseData.getTerm().equalsIgnoreCase(termSearch)) {
-                        courseList.getItems().add(courseData.getCourseCode());
+                        courseList.getItems().add(stringCourseEntry.getKey());
                     }
                 }
             }
@@ -162,48 +154,26 @@ public class AdvisingToolController {
             //If the user hasn't imported the tracks yet, displays helpful error message.
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Course Tracks Not Imported");
+            alert.setHeaderText("BasicCourseInfo Tracks Not Imported");
             alert.setContentText("All course tracks must be loaded before they are displayed.");
             alert.showAndWait();
         }
     }
 
     /**
-     * Allows for searching by course name when the user hits the Search By Course button.
+     * Allows for searching by course name when the user hits the Search By BasicCourseInfo button.
      *
      * @param event The event causing this method to fire.
      */
     @FXML
     protected void searchByCourse(ActionEvent event) {
         courseList.getItems().clear(); //clears the list so it doesn't keep adding items.
-        if (SETrack != null && CSTrack != null) {
-            String courseStr = courseSearch.getText();
-            for (Map.Entry<String, Course> courseEntry : SETrack.entrySet()) {
-                if (courseEntry.getKey().equalsIgnoreCase(courseStr)) {
-                    courseList.getItems().add(courseEntry.getKey());
-                }
+
+        String courseStr = courseSearch.getText();
+        for (String courseKey : allCourses.keySet()) {
+            if (courseKey.toLowerCase().contains(courseStr.toLowerCase())) {
+                courseList.getItems().add(courseKey);
             }
-            for (Map.Entry<String, Course> courseEntry : CSTrack.entrySet()) {
-                if (courseEntry.getKey().equalsIgnoreCase(courseStr)) {
-                    boolean alreadyThere = false;
-                    for (String courseName : courseList.getItems()) {
-                        if (courseName.equalsIgnoreCase(courseStr)) {
-                            alreadyThere = true;
-                            break;
-                        }
-                    }
-                    if (!alreadyThere) {
-                        courseList.getItems().add(courseEntry.getKey());
-                    }
-                }
-            }
-        } else {
-            //If the user hasn't imported the tracks yet, displays helpful error message.
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Course Tracks Not Imported");
-            alert.setContentText("All course tracks must be loaded before they are displayed.");
-            alert.showAndWait();
         }
     }
 
@@ -221,8 +191,8 @@ public class AdvisingToolController {
             File file = fileChooser.showOpenDialog(null);
             Transcript transcript = new Transcript(file);
             pdf = transcript.getPdf();
-            CourseCompleter courseCompleter = new CourseCompleter(pdf, ctds);
-            updatedTrack = courseCompleter.run();
+            CourseCompleter courseCompleter = new CourseCompleter(pdf);
+            courseCompleter.run();
             recommendButton.setDisable(false);
             completedGraphButton.setDisable(false);
         } catch (NullPointerException npe) {
@@ -238,93 +208,70 @@ public class AdvisingToolController {
     }
 
     public void onRecommendationsFaculty(){
-        ArrayList<Course> sorted;
+        final HashMap<String, BasicCourseInfo> notCompleted = new HashMap<>();
+        ArrayList<BasicCourseInfo> sorted;
         courseList.getItems().clear();
-        for (Map.Entry<String, Course> stringCourseEntry : updatedTrack.getSETrackCSV().entrySet()) { //TODO: HARDCODED TO SE TRACK
-            Course courseData = stringCourseEntry.getValue();
+
+        for (Map.Entry<String, BasicCourseInfo> stringCourseEntry : allCourses.entrySet()) {
+            BasicCourseInfo courseData = stringCourseEntry.getValue();
             if (!courseData.isCompleted()) {
-                if (!loadedCourses.containsKey(courseData.getCourseCode())) {
+                if (!notCompleted.containsKey(courseData.getCourseCode())) {
                     courseData.addStudent();
-                    loadedCourses.put(courseData.getCourseCode(), courseData);
+                    notCompleted.put(courseData.getCourseCode(), courseData);
                 } else {
-                    loadedCourses.get(courseData.getCourseCode()).addStudent();
+                    notCompleted.get(courseData.getCourseCode()).addStudent();
                 }
             }
         }
-//        if (numOfLoadedTranscripts == 1) {
-//            for (Map.Entry<String, Course> stringCourseEntry : updatedTrack.getSETrackCSV().entrySet()) { //TODO: HARDCODED TO SE TRACK
-//                Course courseData = (Course) ((HashMap.Entry) stringCourseEntry).getValue();
-//                if (!courseData.isCompleted()) {
-//                    courseData.addStudent();
-//                    uncompletedList.add(courseData);
-//                    loadedCourses.add(courseData);
-//                }
-//            }
-//        } else {
-//            for (Map.Entry<String, Course> stringCourseEntry : updatedTrack.getSETrackCSV().entrySet()) { //TODO: HARDCODED TO SE TRACK
-//                Course courseData = stringCourseEntry.getValue();
-//                if (!courseData.isCompleted()) {
-//                    boolean isDuplicate = false;
-//                    for (Course course :
-//                            loadedCourses) {
-//                        if (courseData.getCourseCode().equalsIgnoreCase(course.getCourseCode())){
-//                            isDuplicate = true;
-//                        }
-//                    }
-//                    if (!isDuplicate){
-//                        courseData.addStudent();
-//                        loadedCourses.add(courseData);
-//                    } else {
-//                        courseData.addStudent(); //TODO: FINISH ADDING COURSES AND DISPLAYING THE NUMBER OF STUDENTS TAKING
-//                    }
-//                }
-//            }
-//        }
-        ArrayList<Course> unsortedMasterList = new ArrayList<>();
-        for (Map.Entry<String, Course> stringCourseEntry : loadedCourses.entrySet()) {
+        ArrayList<BasicCourseInfo> unsortedMasterList = new ArrayList<>();
+        for (Map.Entry<String, BasicCourseInfo> stringCourseEntry : notCompleted.entrySet()) {
             unsortedMasterList.add(stringCourseEntry.getValue());
         }
         sorted = sortList(unsortedMasterList);
         String term = "";
         String year = "";
         String filler = "---------------";
-        for (Course c :
-                sorted) {
+        for (BasicCourseInfo c : sorted) {
+            TrackCourseInfo trackC = SETrack.getOrDefault(c.getCourseCode(), null);
+            if (trackC == null) trackC = CSTrack.getOrDefault(c.getCourseCode(), null);
+            if (trackC == null) continue;
+
             if (courseList.getItems().isEmpty()) { //TODO: THIS WILL NOT WORK PROPERLY UNTIL ELECTIVES ARE HANDLED
-                courseList.getItems().add(filler + "Year: " + c.getYear() + " Term: " + c.getTerm() + filler);
-                term = c.getTerm();
-                year = c.getYear();
-            } else if (!c.getTerm().equals(term) || !c.getYear().equals(year)) {
-                courseList.getItems().add(filler + "Year: " + c.getYear() + " Term: " + c.getTerm() + filler);
-                term = c.getTerm();
-                year = c.getYear();
+                courseList.getItems().add(filler + "Year: " + trackC.getYear() + " Term: " + trackC.getTerm() + filler);
+                term = trackC.getTerm();
+                year = trackC.getYear();
+            } else if (!trackC.getTerm().equals(term) || !trackC.getYear().equals(year)) {
+                courseList.getItems().add(filler + "Year: " + trackC.getYear() + " Term: " + trackC.getTerm() + filler);
+                term = trackC.getTerm();
+                year = trackC.getYear();
             }
             courseList.getItems().add(c.getCourseCode() + " x" + c.getNumOfStudents());
         }
     }
 
     public void onRecommendationsStudent(){
-        ArrayList<Course> uncompletedList = new ArrayList<>();
-        ArrayList<Course> sorted;
+        ArrayList<BasicCourseInfo> notCompleted = new ArrayList<>();
+        ArrayList<BasicCourseInfo> sorted;
         courseList.getItems().clear(); //clears the list so it doesn't keep adding items.
-        if (updatedTrack != null) {
-            for (Map.Entry<String, Course> stringCourseEntry : updatedTrack.getSETrackCSV().entrySet()) { //TODO: HARDCODED TO SE TRACK
-                Course courseData = stringCourseEntry.getValue();
-                if (!courseData.isCompleted()) {
-                    uncompletedList.add(courseData);
-                }
+        for (Map.Entry<String, BasicCourseInfo> stringCourseEntry : allCourses.entrySet()) { //TODO: HARDCODED TO SE TRACK
+            BasicCourseInfo courseData = stringCourseEntry.getValue();
+            if (!courseData.isCompleted()) {
+                notCompleted.add(courseData);
             }
         }
-        sorted = sortList(uncompletedList);
+        sorted = sortList(notCompleted);
         String term = "";
         String year = "";
         String filler = "---------------";
-        for (Course c :
-                sorted) {
-            if (courseList.getItems().isEmpty() || (!c.getTerm().equals(term) || !c.getYear().equals(year))) { //TODO: THIS WILL NOT WORK PROPERLY UNTIL ELECTIVES ARE HANDLED
-                courseList.getItems().add(filler + "Year: " + c.getYear() + " Term: " + c.getTerm() + filler);
-                term = c.getTerm();
-                year = c.getYear();
+        for (BasicCourseInfo c : sorted) {
+            TrackCourseInfo trackC = SETrack.getOrDefault(c.getCourseCode(), null);
+            if (trackC == null) trackC = CSTrack.getOrDefault(c.getCourseCode(), null);
+            if (trackC == null) continue;
+
+            if (courseList.getItems().isEmpty() || (!trackC.getTerm().equals(term) || !trackC.getYear().equals(year))) { //TODO: THIS WILL NOT WORK PROPERLY UNTIL ELECTIVES ARE HANDLED
+                courseList.getItems().add(filler + "Year: " + trackC.getYear() + " Term: " + trackC.getTerm() + filler);
+                term = trackC.getTerm();
+                year = trackC.getYear();
             }
             courseList.getItems().add(c.getCourseCode());
         }
@@ -380,8 +327,8 @@ public class AdvisingToolController {
         return alert;
     }
 
-    private ArrayList<Course> sortList(ArrayList<Course> unsortedList){
-        ArrayList<Course> sortedList = new ArrayList<>();
+    private ArrayList<BasicCourseInfo> sortList(ArrayList<BasicCourseInfo> unsortedList){
+        ArrayList<BasicCourseInfo> sortedList = new ArrayList<>();
         ArrayList<String> terms = new ArrayList<>();
         terms.add("fall");
         terms.add("winter");
@@ -395,9 +342,12 @@ public class AdvisingToolController {
                 years) {
             for (String term :
                     terms) {
-                for (Course c :
-                        unsortedList) {
-                    if (c.getTerm().equalsIgnoreCase(term) && c.getYear().equalsIgnoreCase(year)) {
+                for (BasicCourseInfo c : unsortedList) {
+                    TrackCourseInfo trackC = SETrack.getOrDefault(c.getCourseCode(), null);
+                    if (trackC == null) trackC = CSTrack.getOrDefault(c.getCourseCode(), null);
+                    if (trackC == null) continue;
+
+                    if (trackC.getTerm().equalsIgnoreCase(term) && trackC.getYear().equalsIgnoreCase(year)) {
                         sortedList.add(c);
                     }
                 }
@@ -446,7 +396,7 @@ public class AdvisingToolController {
             graphStage.show();
 
             CourseGraphController graphController = loader.getController();
-            graphController.showCompleted(updatedTrack);
+            graphController.showCompleted();
         } catch (IOException e) {
             // Do nothing, it'll never happen
             // Required for reading CourseGraph.fxml
@@ -459,29 +409,21 @@ public class AdvisingToolController {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter(
                 "TXT Files (*.txt)", "*.txt"));
         File file = fc.showSaveDialog(null);
-        generateGraduationPlan(file, updatedTrack, type);
+        generateGraduationPlan(file, type);
     }
 
-    private static void generateGraduationPlan(File file, CourseTracksDataStructure updatedTrack, String type) {
-        if(updatedTrack == null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No Transcript Imported");
-            alert.setContentText("Please import a transcript first.");
-            alert.showAndWait();
-            return;
-        }
-
+    private static void generateGraduationPlan(File file, String type) {
+        // TODO: Make sure this is only accessible after importing a transcript
         String currentTerm = null;
         String currentYear = null;
         String nextTerm = null;
         String nextYear = null;
-        ArrayList<Course> completedCourses = new ArrayList<>();
-        ArrayList<Course> incompleteCourses = new ArrayList<>();
-        ArrayList<Course> electives = new ArrayList<>();
+        ArrayList<BasicCourseInfo> completedCourses = new ArrayList<>();
+        ArrayList<BasicCourseInfo> incompleteCourses = new ArrayList<>();
+        ArrayList<BasicCourseInfo> electives = new ArrayList<>();
 
-        for (Map.Entry<String, Course> stringCourseEntry : updatedTrack.getSETrackCSV().entrySet()) {
-            Course courseData = stringCourseEntry.getValue();
+        for (Map.Entry<String, BasicCourseInfo> stringCourseEntry : CourseLists.courses.entrySet()) {
+            BasicCourseInfo courseData = stringCourseEntry.getValue();
             if (!courseData.isCompleted() && !(courseData.getCourseName().equalsIgnoreCase(""))) {
                 incompleteCourses.add(courseData);
             } else if(courseData.isCompleted() && !(courseData.getCourseName().equalsIgnoreCase(""))) {
@@ -496,8 +438,12 @@ public class AdvisingToolController {
         int spring = 0;
 
 
-        for(Course course : incompleteCourses){
-            String term = course.getTerm();
+        for(BasicCourseInfo course : incompleteCourses){
+            TrackCourseInfo trackC = CourseLists.SETrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) trackC = CourseLists.CSTrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) continue;
+
+            String term = trackC.getTerm();
             if(term.equalsIgnoreCase("Fall")){
                 fall++;
             } else if(term.equalsIgnoreCase("Winter")){
@@ -508,7 +454,7 @@ public class AdvisingToolController {
 
             if(fall == 3 || winter == 3 || spring ==3){
                 currentTerm = term;
-                currentYear = course.getYear();
+                currentYear = trackC.getYear();
                 break;
             }
 
@@ -518,9 +464,13 @@ public class AdvisingToolController {
         int nF = 0;
         int nW = 0;
         int nS = 0;
-        for(Course course: incompleteCourses){
-            if(!(course.getTerm().equalsIgnoreCase(currentTerm))){
-                String nTerm = course.getTerm();
+        for(BasicCourseInfo course: incompleteCourses){
+            TrackCourseInfo trackC = CourseLists.SETrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) trackC = CourseLists.CSTrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) continue;
+
+            if(!(trackC.getTerm().equalsIgnoreCase(currentTerm))){
+                String nTerm = trackC.getTerm();
                 if(nTerm.equalsIgnoreCase("Fall")){
                     nF++;
                 } else if(nTerm.equalsIgnoreCase("Winter")){
@@ -531,7 +481,7 @@ public class AdvisingToolController {
 
                 if(nF == 3 || nW == 3 || nS ==3){
                     nextTerm = nTerm;
-                    nextYear = course.getYear();
+                    nextYear = trackC.getYear();
                     break;
                 }
 
@@ -563,9 +513,13 @@ public class AdvisingToolController {
                 pw.write("\n\n");
                 pw.write("Currently Enrolled Courses:\n");
                 pw.write("\n");
-                for(Course course: incompleteCourses){
-                    if(course.getTerm().equalsIgnoreCase(currentTerm) && course.getYear().equalsIgnoreCase(currentYear)){
-                        pw.write(course.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
+                for(BasicCourseInfo course: incompleteCourses){
+                    TrackCourseInfo trackC = CourseLists.SETrack.getOrDefault(course.getCourseCode(), null);
+                    if (trackC == null) trackC = CourseLists.CSTrack.getOrDefault(course.getCourseCode(), null);
+                    if (trackC == null) continue;
+
+                    if(trackC.getTerm().equalsIgnoreCase(currentTerm) && trackC.getYear().equalsIgnoreCase(currentYear)){
+                        pw.write(trackC.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
                     }
                 }
                 pw.write("\n\n");
@@ -593,9 +547,13 @@ public class AdvisingToolController {
                 pw.write("\n\n");
                 pw.write("Student's Current Courses:\n");
                 pw.write("\n");
-                for(Course course: incompleteCourses){
-                    if(course.getTerm().equalsIgnoreCase(currentTerm) && course.getYear().equalsIgnoreCase(currentYear)){
-                        pw.write(course.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
+                for(BasicCourseInfo course: incompleteCourses){
+                    TrackCourseInfo trackC = CourseLists.SETrack.getOrDefault(course.getCourseCode(), null);
+                    if (trackC == null) trackC = CourseLists.CSTrack.getOrDefault(course.getCourseCode(), null);
+                    if (trackC == null) continue;
+
+                    if(trackC.getTerm().equalsIgnoreCase(currentTerm) && trackC.getYear().equalsIgnoreCase(currentYear)){
+                        pw.write(trackC.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
                     }
                 }
                 pw.write("\n\n");
@@ -616,37 +574,53 @@ public class AdvisingToolController {
 
     }
 
-    public static void printClasses(ArrayList<Course> courses, PrintWriter pw){
+    public static void printClasses(ArrayList<BasicCourseInfo> courses, PrintWriter pw){
         pw.write("\n");
         pw.write("Freshman\n");
         pw.write("------------------------\n");
-        for(Course course: courses){
-            if(course.getYear().equalsIgnoreCase("Freshman")){
-                pw.write(course.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
+        for(BasicCourseInfo course: courses){
+            TrackCourseInfo trackC = CourseLists.SETrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) trackC = CourseLists.CSTrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) continue;
+
+            if(trackC.getYear().equalsIgnoreCase("Freshman")){
+                pw.write(trackC.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
             }
         }
         pw.write("\n");
         pw.write("Sophomore\n");
         pw.write("------------------------\n");
-        for(Course course: courses){
-            if(course.getYear().equalsIgnoreCase("Sophomore")){
-                pw.write(course.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
+        for(BasicCourseInfo course: courses){
+            TrackCourseInfo trackC = CourseLists.SETrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) trackC = CourseLists.CSTrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) continue;
+
+            if(trackC.getYear().equalsIgnoreCase("Sophomore")){
+                pw.write(trackC.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
             }
         }
         pw.write("\n");
         pw.write("Junior\n");
         pw.write("------------------------\n");
-        for(Course course: courses){
-            if(course.getYear().equalsIgnoreCase("Junior")){
-                pw.write(course.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
+        for(BasicCourseInfo course: courses){
+            TrackCourseInfo trackC = CourseLists.SETrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) trackC = CourseLists.CSTrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) continue;
+
+            if(trackC.getYear().equalsIgnoreCase("Junior")){
+                pw.write(trackC.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
             }
         }
         pw.write("\n");
         pw.write("Senior\n");
         pw.write("------------------------\n");
-        for(Course course: courses){
-            if(course.getYear().equalsIgnoreCase("Senior")){
-                pw.write(course.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
+        for(BasicCourseInfo course: courses){
+            TrackCourseInfo trackC = CourseLists.SETrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) trackC = CourseLists.CSTrack.getOrDefault(course.getCourseCode(), null);
+            if (trackC == null) continue;
+
+            if(trackC.getYear().equalsIgnoreCase("Senior")){
+                pw.write(trackC.getTerm() + " - " +course.getCourseCode() + " - " + course.getCourseName() + "\n");
             }
         }
     }

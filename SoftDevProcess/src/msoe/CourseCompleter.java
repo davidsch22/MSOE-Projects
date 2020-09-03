@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CourseCompleter {
-    private CourseTracksDataStructure track;
-    private HashMap<String, Course> currentTrack;
+    private HashMap<String, BasicCourseInfo> allCourses;
     private List<String> pdf;
     private ArrayList<String> list;
     private List<String> notPassed;
@@ -15,11 +14,10 @@ public class CourseCompleter {
     /**
      * this class parses passed data from the transcript and marks courses completed if finished
      */
-    public CourseCompleter(List<String> pdf, CourseTracksDataStructure track) {
+    public CourseCompleter(List<String> pdf) {
         this.pdf = pdf;
         stringifyPDF();
-        this.track = track;
-        currentTrack = track.getSETrackCSV(); // TODO: Add CS track support
+        allCourses = CourseLists.courses; // TODO: Add CS track support
         notPassed = new ArrayList<>();
     }
 
@@ -31,10 +29,10 @@ public class CourseCompleter {
             if (splitCourses[1].contains("IP")) {
                 notPassed.add(splitCourses[0]);
             }
-            for (Map.Entry<String, Course> stringCourseEntry : currentTrack.entrySet()) {
-                Course courseData = stringCourseEntry.getValue();
+            for (Map.Entry<String, BasicCourseInfo> stringCourseEntry : allCourses.entrySet()) {
+                BasicCourseInfo courseData = stringCourseEntry.getValue();
                 if (splitCourses[0].equals(courseData.getCourseCode())) { // checks if the course matches a course from the selected track
-                    Course course = currentTrack.get(courseData.getCourseCode());
+                    BasicCourseInfo course = allCourses.get(courseData.getCourseCode());
                     courseCompleted = parsePassing(splitCourses[1]); // compares grade to
                     course.setCompleted(courseCompleted);
                 }
@@ -65,10 +63,9 @@ public class CourseCompleter {
         return passed;
     }
 
-    public CourseTracksDataStructure run() {
+    public void run() {
         pruneReturns();
         determineCompletion(pruneReturns());
-        return track;
     }
 
     private void stringifyPDF() {
@@ -101,5 +98,7 @@ public class CourseCompleter {
      * Get the list of all classes that can be potentailly failed
      * @return list of classes that can be failed
      */
-    public List<String> getNotPassed(){return notPassed;}
+    public List<String> getNotPassed() {
+        return notPassed;
+    }
 }

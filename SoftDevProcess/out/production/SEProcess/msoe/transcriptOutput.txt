@@ -1,0 +1,63 @@
+2018-2019 : Fall Quarter 
+CH200: D 
+CS1011: RD 
+GS1001: BC 
+
+
+Total Credits Earned : 12.00 
+
+MA120: B 
+2018-2019 : Winter Quarter 
+CS1011: BC 
+GS1002: A 
+MA136: A 
+OR1911: S 
+
+
+Total Credits Earned : 28.00 
+
+PH2011: AB 
+2018-2019 : Spring Quarter 
+CS1021: BC 
+GS1003: A 
+MA137: A 
+Page: 2 
+2018-2019 : Spring Quarter 
+
+
+Total Credits Earned : 44.00 
+
+PH2021: BC 
+2019-2020 : Fall Quarter 
+BA3444: A 
+CS2852: AB 
+CS2911: BC 
+MA2310: B 
+
+
+Total Credits Earned : 61.00 
+
+SE2030: C 
+2019-2020 : Winter Quarter 
+CS2711: IP 
+MA2314: IP 
+SE2811: IP 
+
+
+Total Credits Earned : 61.00 
+
+SE2840: IP 
+ID: 9 
+DATE: 0 
+2019-2020 : Spring Quarter 
+BA4520: IP 
+CS2040: IP 
+MA262: IP 
+SE2800: IP 
+
+
+Total Credits Earned : 61.00 
+
+
+Major Totals: 50.0019.00 
+SE2832: IP 
