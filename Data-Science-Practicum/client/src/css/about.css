@@ -1,0 +1,35 @@
+.About {
+    text-align: center;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.Team-Header, .Wrapper{
+    text-align: left;
+    margin-left: 20px;
+}
+
+.Wrapper {
+    text-align: left;
+    margin-left: 40px;
+    font-size: smaller;
+}
+
+p {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    font-size: smaller;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+}
+

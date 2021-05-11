@@ -1,0 +1,99 @@
+.Footer {
+    background-color: #2a456a;
+    min-height: 1vh;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 20px 0 20px;
+    font-size: 15px;
+    line-height: 24px;
+}
+
+.Footer hr
+{
+    border-top-color: #bbb;
+    opacity: 0.5;
+}
+
+.Footer hr.small
+{
+    margin: 20px 0;
+}
+
+.Footer h6
+{
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-top: 5px;
+    letter-spacing: 2px;
+}
+
+.Footer a
+{
+    color: #737373;
+}
+
+.Footer a:hover
+{
+    color: #3366cc;
+    text-decoration: none;
+}
+
+.footer-links
+{
+    padding-left: 12px;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.footer-links li
+{
+    display: block;
+    float: left;
+}
+
+.footer-links a
+{
+    display: block;
+    color: lightgray;
+    text-align: center;
+    padding-right: 16px;
+    text-decoration: none;
+}
+
+.footer-links a:active,.footer-links a:focus,.footer-links a:hover
+{
+    color: #3366cc;
+    text-decoration: none;
+}
+
+.footer-links.inline li
+{
+    display: inline-block;
+}
+
+.copyright-text
+{
+    margin: 0;
+}
+
+@media (max-width:991px)
+{
+    .Footer [class^=col-]
+    {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width:767px)
+{
+    .Footer
+    {
+        padding-bottom: 0;
+    }
+    .Footer .copyright-text
+    {
+        text-align: center;
+    }
+}

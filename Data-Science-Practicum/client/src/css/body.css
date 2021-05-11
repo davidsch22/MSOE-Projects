@@ -1,0 +1,23 @@
+.button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #3f6fb0;
+    border: none;
+    border-radius: 15px;
+}
+
+.button:hover {
+    background-color: #2a456a
+}
+
+.horse-image {
+    max-width: 60%;
+    height: auto;
+    margin-bottom: 3vh;
+}

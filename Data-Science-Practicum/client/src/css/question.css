@@ -1,0 +1,16 @@
+.Question {
+    margin-bottom: 3em;
+}
+
+.Question p {
+    margin: 0;
+    width: 100%;
+    text-align: left;
+}
+
+.Question label {
+    float: left;
+    padding: 0 1em;
+    text-align: center;
+    font-size: large;
+}
