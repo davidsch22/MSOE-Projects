@@ -13,7 +13,12 @@
 }
 
 .button:hover {
-    background-color: #2a456a
+    background-color: #2a456a;
+}
+
+.button:disabled, .button[disabled] {
+    background-color: #2a456a;
+    color: #666666;
 }
 
 .horse-image {

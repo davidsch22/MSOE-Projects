@@ -50,13 +50,13 @@ class About extends React.Component {
                     <h3 className="Names">David Schulz</h3>
                     <div className="Grade-Level">Grade level: Junior Standing</div>
                     <div className="Major">Major: Computer Science</div>
-                    <div className="Contact">email: ramosj@msoe.edu</div>
+                    <div className="Contact">email: schulzd@msoe.edu</div>
                 </div>
                 <div className="Wrapper">
                     <h3 className="Names">Jesus Ramos</h3>
                     <div className="Grade-Level">Grade level: Junior Standing</div>
                     <div className="Major">Major: Computer Science</div>
-                    <div className="Contact">email: schulzd@msoe.edu</div>
+                    <div className="Contact">email: ramosj@msoe.edu</div>
                 </div>
             </div>
         );

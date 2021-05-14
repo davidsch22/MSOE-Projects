@@ -23,6 +23,10 @@ class Upload extends React.Component {
             alert("Must select a file");
             return;
         }
+
+        document.getElementById("upload").disabled = true;
+        document.getElementById("upload").value = "Working...";
+
         let currentFile = this.state.selectedFiles[0];
 
         let formData = new FormData();
@@ -35,6 +39,8 @@ class Upload extends React.Component {
         }).then((response) => {
             this.props.setImageName(response.data.filename);
             this.props.handler(2);
+        }).catch(() => {
+            alert("There was an error uploading the image. The file might be too large.");
         });
     }
 
@@ -44,7 +50,7 @@ class Upload extends React.Component {
                 <h1>Upload Image</h1>
                 <form onSubmit={this.uploadImage}>
                     <input type="file" name="file" accept="image/*" onChange={this.selectFile} />
-                    <input className="button" type="submit" value="Upload" />
+                    <input id="upload" className="button" type="submit" value="Upload" />
                 </form>
             </div>
         );
