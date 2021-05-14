@@ -1,0 +1,91 @@
+<!--
+SE2840 Winter 2021 - Lab 3 JS Coin Flipper DOM
+Name: David Schulz
+Class Section: 041
+!-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="CoinFlipper.css" />
+	<script src="CoinFlipper.js"></script>
+	<script>
+		let cf = new CoinFlipper();
+		cf.init();
+	</script>
+	<title>David Schulz's Coin Flipper</title>
+</head>
+<body>
+	<h1>David Schulz's Coin Flipper</h1>
+	<form>
+		<label id="ncoinsLabel" for="ncoins">Number of Coins to Flip:</label>
+		<input type="text" id="ncoins" name="ncoins">
+		<label id="coinsError" hidden="hidden"></label>
+		<br>
+		<label id="nflipsLabel" for="nflips">Number of Flips:</label>
+		<input type="text" id="nflips" name="nflips">
+		<label id="flipsError" hidden="hidden"></label>
+		<br>
+		<button type="button" onclick="cf.onGoClicked()">Go</button>
+	</form>
+	<table id="table" hidden="hidden">
+		<tr>
+			<td>0</td>
+			<td id="0s"></td>
+			<td class="meter"><meter id="0meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td id="1s"></td>
+			<td class="meter"><meter id="1meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td id="2s"></td>
+			<td class="meter"><meter id="2meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td id="3s"></td>
+			<td class="meter"><meter id="3meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td id="4s"></td>
+			<td class="meter"><meter id="4meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td id="5s"></td>
+			<td class="meter"><meter id="5meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td id="6s"></td>
+			<td class="meter"><meter id="6meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td id="7s"></td>
+			<td class="meter"><meter id="7meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td id="8s"></td>
+			<td class="meter"><meter id="8meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td id="9s"></td>
+			<td class="meter"><meter id="9meter" value="0"></meter></td>
+		</tr>
+		<tr>
+			<td>10</td>
+			<td id="10s"></td>
+			<td class="meter"><meter id="10meter" value="0"></meter></td>
+		</tr>
+	</table>
+	<p id="time" hidden="hidden"></p>
+</body>
+</html>

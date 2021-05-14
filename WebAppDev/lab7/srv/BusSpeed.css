@@ -1,0 +1,17 @@
+#map {
+    height: 500px;
+    width: 1000px;
+}
+
+body {
+    width: 1000px;
+}
+
+#resultsText {
+    width: 100%;
+    text-align: center;
+    color: darkblue;
+    background-color: #c7deff;
+    border: lightskyblue solid 1px;
+    border-radius: 5px;
+}

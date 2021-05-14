@@ -1,0 +1,72 @@
+/*
+SE2840 Winter 2021 - Lab 3 JS Coin Flipper DOM
+Name: David Schulz
+Class Section: 041
+*/
+
+body {
+    background-color: lightgray;
+}
+
+form {
+    width: 50%;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+#ncoinsLabel, #nflipsLabel {
+    display: inline-block;
+    width: 25%;
+}
+
+input {
+    width: 20%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#coinsError, #flipsError {
+    width: 50%;
+    color: red;
+}
+
+button {
+    width: 50%;
+    padding: 10px 5px 10px 5px;
+    margin-bottom: 5px;
+}
+
+label, input, button, td {
+    background-color: white;
+}
+
+table {
+    width: 100%;
+}
+
+label, td {
+    padding: 10px 5px 10px 5px;
+    border: black solid 1px;
+    border-radius: 10px;
+}
+
+td {
+    width: 20px;
+    text-align: center;
+}
+
+meter {
+    width: 100%;
+}
+
+meter::-webkit-meter-optimum-value {
+    background: royalblue;
+}
+
+.meter {
+    background-color: inherit;
+    width: 90%;
+    border: none;
+}
