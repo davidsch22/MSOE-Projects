@@ -1,0 +1,16 @@
+body {
+    background-color: lightgray;
+    margin: 20px;
+}
+
+table {
+    background-color: white;
+}
+
+button {
+    margin: 10px;
+}
+
+.firstcol {
+    width: 25%;
+}

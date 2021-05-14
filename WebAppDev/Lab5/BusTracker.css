@@ -1,0 +1,14 @@
+/*
+ * Class: SE2840 - Lab 5 - AJAX Bus Tracker
+ * Name: David Schulz
+ * Class Section: 041
+ */
+
+body {
+    background-color: lightgray;
+}
+
+#map {
+    height: 500px;
+    width: 1000px;
+}

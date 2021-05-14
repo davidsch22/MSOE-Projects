@@ -1,0 +1,16 @@
+# Introduction
+In this lab, we go through some of the basics of HTML and CSS by creating a simple webpage
+that displays our winter quarter schedule. How it displays on the normal page will be
+different from the printing preview.
+
+# Summary
+From this lab, we learned how to properly structure our HTML code, as well as how to link
+the CSS stylesheets to the HTML. We also learned how to change the stylesheet that's being
+used based on the type of media the page is being viewed as.
+
+# Suggestions
+I thought that making the two different stylesheets for different purposes, one for the
+printing preview and one for the normal site, was really interesting. It's not something
+I've done when working with HTML and CSS in school before. In the future, I'd suggest
+giving more specific instructions with how exactly to do certain things with CSS, since
+there are many different ways it can be done.

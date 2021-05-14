@@ -1,0 +1,13 @@
+/*
+ * Class: SE2840 - Lab 4 - Coin Flip Charter
+ * Name: David Schulz
+ * Class Section: 041
+ */
+
+button {
+    background-color: dodgerblue;
+    color: white;
+    padding: 10px;
+    border: dodgerblue solid 1px;
+    border-radius: 5px;
+}

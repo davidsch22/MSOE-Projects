@@ -1,0 +1,21 @@
+.blue {
+    color: blue;
+    font-size: medium;
+    font-family: "Comic Sans MS";
+}
+.black {
+    color: black;
+}
+.green {
+    color: green;
+    font-size: large;
+    font-family: "Britannic Bold";
+}
+
+body {
+    margin: 10px;
+}
+
+button {
+    margin: 10px;
+}

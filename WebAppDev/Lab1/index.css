@@ -1,0 +1,75 @@
+/*
+ *  David Schulz
+ *  Lab 1 - Web Page - HTML and CSS
+ *  SE 2840 041
+ */
+
+body {
+    background-color: lightblue;
+    text-align: center;
+    font-family: Arial, serif;
+    color: green;
+}
+
+img {
+    width: 200px;
+}
+
+table {
+    display: inline-table;
+    width: 85%;
+    border: double gray 8px;
+}
+
+th {
+    width: 18%;
+    background-color: black;
+    color: white;
+    font-style: italic;
+    font-weight: bold;
+}
+
+td {
+    width: 18%;
+    background-color: white;
+    border: solid black 1px;
+}
+
+.col1 {
+    width: 10%;
+}
+
+.cs3840 {
+    background-color: lightgreen;
+    color: blue;
+    border-radius: 10px;
+}
+
+.cs3300 {
+    background-color: dodgerblue;
+    color: lightgreen;
+    border-radius: 10px;
+}
+
+.se2840 {
+    background-color: orangered;
+    color: yellow;
+    border-radius: 10px;
+}
+
+.hu4301 {
+    background-color: mediumpurple;
+    color: gold;
+    border-radius: 10px;
+}
+
+.or402 {
+    background-color: hotpink;
+    color: indigo;
+    border-radius: 10px;
+}
+
+.fh {
+    color: black;
+    border-radius: 10px;
+}
