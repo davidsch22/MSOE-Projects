@@ -1,0 +1,8 @@
+POS
+NEU
+NEG
+NEG
+NEU
+NEG
+POS
+NEU
