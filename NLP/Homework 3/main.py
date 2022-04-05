@@ -47,7 +47,7 @@ def main():
         line = f.readline()
         while line:
             label = line[:3]
-            sentence = line[4:].strip().strip(".!?").replace(',', '').lower()
+            sentence = line[4:].strip().strip("!?").replace('.','').replace(',','').lower()
             new_row = pd.DataFrame({'Sentence': [sentence], 'Label': [label]})
             train = pd.concat([train, new_row], ignore_index=True)
             line = f.readline()
@@ -55,15 +55,19 @@ def main():
     with open('testSet.txt') as f:
         line = f.readline()
         while line:
-            line = line.strip().strip(".!?").replace(',', '').lower()
+            line = line.strip().strip("!?").replace('.','').replace(',','').lower()
             test.append(line)
             line = f.readline()
     
     C = ['POS', 'NEG', 'NEU']
 
     (logprior, loglikelihood, V) = train_naive_bayes(train, C)
+    print(logprior, '\n')
+    print(loglikelihood.loc['the'][:], '\n')
+    print(loglikelihood.loc['program'][:], '\n')
     for line in test:
         print(line, ":", test_naive_bayes(line.split(), logprior, loglikelihood, C, V))
+    print()
 
 
 if __name__ == "__main__":
