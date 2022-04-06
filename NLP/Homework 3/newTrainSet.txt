@@ -17,5 +17,3 @@ NEU The software generates web pages based on inputs you give it.
 NEU It runs on all major platforms, including iOS.
 NEG I had nothing but trouble with the software.
 NEG The thing sucks!
-NEG The program was really bad.
-NEU This program was alright.

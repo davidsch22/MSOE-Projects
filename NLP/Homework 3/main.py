@@ -2,11 +2,16 @@ import math
 import pandas as pd
 
 
-def train_naive_bayes(D: pd.DataFrame, C: list):
+def train_naive_bayes(D: pd.DataFrame, C: list, lex: pd.DataFrame=pd.DataFrame):
     # returns log P(c) and log P(w|c)
-    # train['Sentence'] = train['Sentence'].apply(lambda s: )
 
     D_words = D['Sentence'].apply(lambda s: s.split())
+    if not lex.empty:
+        new_vocab = pd.Series(lex['Word'].tolist(), name='Sentence')
+        print(D_words)
+        print(new_vocab)
+        D_words = pd.concat([D_words, new_vocab], ignore_index=True)
+        print(D_words)
     V = list(set().union(*D_words.tolist()))
 
     logprior = {}
@@ -19,10 +24,16 @@ def train_naive_bayes(D: pd.DataFrame, C: list):
         logprior[c] = math.log(Nc/Ndoc)
         bigdoc[c] = D_words[D['Label'] == c].tolist() # all d in D with class c
         total = 0
-        for w in V: # Count total number of words with add-1 smoothing
-            total += sum(x.count(w) for x in bigdoc[c]) + 1
+        if not lex.empty:
+            total += lex.shape[0] * 2 # Multiply by 2 for add-1 smoothing
+        for w in V: # Count total number of words
+            total += sum(x.count(w) for x in bigdoc[c])
+            if lex.empty:
+                total += 1 # Use add-1 smoothing here if lexicon not provided
         for w in V: # Calculate P(w|c) terms
             count = sum(x.count(w) for x in bigdoc[c]) # number of occurrences of w in bigdoc[c]
+            if not lex.empty and w in lex[lex['Label'] == c]['Word']:
+                count += 1
             loglikelihood.loc[w][c] = math.log((count + 1)/total)
     return logprior, loglikelihood, V
 
@@ -40,10 +51,21 @@ def test_naive_bayes(testdoc: list, logprior: dict, loglikelihood: pd.DataFrame,
 
 
 def main():
+    lexicon = pd.DataFrame(columns=['Word', 'Label'])
     train = pd.DataFrame(columns=['Sentence', 'Label'])
     test = []
 
-    with open('trainingSet.txt') as f:
+    with open('lexicon/subjclues.tff') as f:
+        line = f.readline()
+        while line:
+            details = line.split()
+            word = details[2].replace('word1=','')
+            label = details[5].replace('priorpolarity=','')
+            new_word = pd.DataFrame({'Word': [word], 'Label': [label]})
+            lexicon = pd.concat([lexicon, new_word], ignore_index=True)
+            line = f.readline()
+
+    with open('newTrainSet.txt') as f:
         line = f.readline()
         while line:
             label = line[:3]
@@ -61,10 +83,11 @@ def main():
     
     C = ['POS', 'NEG', 'NEU']
 
-    (logprior, loglikelihood, V) = train_naive_bayes(train, C)
+    (logprior, loglikelihood, V) = train_naive_bayes(train, C, lexicon)
     print(logprior, '\n')
-    print(loglikelihood.loc['the'][:], '\n')
-    print(loglikelihood.loc['program'][:], '\n')
+    print(loglikelihood.loc['great'][:], '\n')
+    print(loglikelihood.loc['software'][:], '\n')
+    print(loglikelihood.loc['sucks'][:], '\n')
     for line in test:
         print(line, ":", test_naive_bayes(line.split(), logprior, loglikelihood, C, V))
     print()
