@@ -1,0 +1,9 @@
+Raw Doc Example:
+What do you need to make a Nether Portal?
+
+Processed Example:
+Parts of Speech:  [('What', 'WP'), ('do', 'VBP'), ('you', 'PRP'), ('need', 'VBP'), ('to', 'TO'), ('make', 'VB'), ('a', 'DT'), ('Nether', 'NNP'), ('Portal', 'NNP'), ('?', '.')]
+Stop words removed:  need make Nether Portal ?
+Stemmed:  need make nether portal ?
+
+Doc was tokenized, POS tagged, had stop words removed, and stemmed.
