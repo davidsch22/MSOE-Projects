@@ -1,0 +1,22 @@
+Input value
+	1000000000
+Expected output values
+	26263 51862
+	56188 71812
+	192753 197872
+	318438 321562
+	976051 977074
+	1599688 1600312
+	7999938 8000062
+	39999988 40000012
+	199999998 200000002
+	1000000000 1000000000
+A discussion of
+	What is it testing?
+		It's testing for correctness, runtime, and memory usage with the
+		largest possible input value, since the largest input will take
+		the longest time to calculate.
+	Why does it make a good test case?
+		It's the highest possible input value. (Edge case)
+Execution time for the solution on that test case
+	9064025200 ns

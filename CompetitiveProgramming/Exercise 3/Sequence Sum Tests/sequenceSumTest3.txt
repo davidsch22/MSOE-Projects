@@ -1,0 +1,23 @@
+Input value
+	794725515
+Expected output values
+	8830239 8830328
+	17660545 17660589
+	26490836 26490865
+	44151409 44151426
+	52981694 52981708
+	79472547 79472556
+	88302831 88302839
+	132454250 132454255
+	158945101 158945105
+	264908504 264908506
+	397362757 397362758
+	794725515 794725515
+A discussion of
+	What is it testing?
+		It's testing for correctness, runtime, and memory usage of a random
+		value within the range of possible input values.
+	Why does it make a good test case?
+		It's a random value within the range of possible input values.
+Execution time for the solution on that test case
+	7395172600 ns

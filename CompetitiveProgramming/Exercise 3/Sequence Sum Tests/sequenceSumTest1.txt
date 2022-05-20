@@ -1,0 +1,13 @@
+Input value
+	1
+Expected output values
+	0 1
+	1 1
+A discussion of
+	What is it testing?
+		It's testing for correctness, runtime, and memory usage with an
+		edge case.
+	Why does it make a good test case?
+		It's the lowest possible input value. (Edge case)
+Execution time for the solution on that test case
+	198600 ns

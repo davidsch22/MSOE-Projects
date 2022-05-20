@@ -1,0 +1,23 @@
+Input value
+	149173414
+Expected output values
+	1 1
+	6 8
+	35 49
+	204 288
+	1189 1681
+	6930 9800
+	40391 57121
+	235416 332928
+	1372105 1940449
+	7997214 11309768
+	46611179 65918161
+A discussion of
+	What is it testing?
+		It's testing for correctness, runtime, and memory usage of a random
+		value within the range of possible input values.
+	Why does it make a good test case?
+		It's a random value within the range of possible input values.
+Execution time for the solution on that test case
+	Running Sum: 538467900 ns
+	Binary Search: 8218867600 ns
